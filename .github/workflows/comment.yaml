@@ -19,7 +19,19 @@ jobs:
           echo "${GITHUB_REF#refs/heads/}"
           echo "Hello world!" > report.md
           cml-send-comment report.md
-      
+
+      - name: Extract branch name
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "GIT_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          echo "GIT_BRANCH=${GITHUB_REF#refs/heads/}"
+
+      - name: Extract branch name on PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "GIT_BRANCH=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
+          echo "GIT_BRANCH=${GITHUB_HEAD_REF}"
+
       - name: Send Slack notification (#qa-dev-handshake)
         if: github.ref == 'refs/heads/testing'
         run: |
