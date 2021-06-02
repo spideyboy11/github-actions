@@ -13,8 +13,8 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-	  echo "${{ github.ref }}"
-	  echo "${{ github.actor }}"
+	      echo "${{ github.ref }}"
+	      echo "${{ github.actor }}"
           echo "Hello world!" > report.md
           cml-send-comment report.md
       
