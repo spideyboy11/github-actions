@@ -15,8 +15,6 @@ jobs:
         run: |
           echo "${{ github.ref }}"
           echo "${{ github.actor }}"
-          echo "${{ GITHUB_HEAD_REF }}"
-          echo "${GITHUB_REF#refs/heads/}"
           echo "Hello world!" > report.md
           cml-send-comment report.md
 
