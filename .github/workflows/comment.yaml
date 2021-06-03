@@ -32,4 +32,4 @@ jobs:
 
       - name: Send Slack notification (#qa-dev-handshake)
         run: |
-          curl -S -s -o /dev/null -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}"
+          curl -s -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}" "https://www.shopify.com/r3wr32"
