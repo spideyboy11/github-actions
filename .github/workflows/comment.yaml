@@ -33,5 +33,4 @@ jobs:
       - name: Send Slack notification (#qa-dev-handshake)
         if: github.ref == 'refs/heads/testing'
         run: |
-          QA_DEV_HANDSHAKE=http://requestbin.net/r/3mg7ow5s
-          curl -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}" ${QA_DEV_HANDSHAKE}
+          curl -s -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}"
