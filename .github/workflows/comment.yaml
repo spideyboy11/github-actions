@@ -31,6 +31,5 @@ jobs:
           echo "GIT_BRANCH=${GITHUB_HEAD_REF}"
 
       - name: Send Slack notification (#qa-dev-handshake)
-        if: github.ref == 'refs/heads/testing'
         run: |
           curl -s -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}"
