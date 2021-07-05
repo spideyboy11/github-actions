@@ -1,8 +1,7 @@
-
 module.exports = async ({github, context, core}) => {
 
     async function getPull(source, target, state) {
-        var existingPr = github.pulls.list({
+        var existingPr = await github.pulls.list({
             owner: context.repo.owner,
             repo: context.repo.repo,
             state: state,
@@ -11,7 +10,7 @@ module.exports = async ({github, context, core}) => {
         });
         return existingPr;
     }
-    
+
     async function createPull(title, source, target) {
         try {
             var newPr = await github.pulls.create({
@@ -26,11 +25,21 @@ module.exports = async ({github, context, core}) => {
         }
     }
 
-    var existingPr = await getPull("master", "testing", "open")
-    if (existingPr.data.length) {
-        console.log("PR already present");
+    if (github.ref == 'refs/heads/testing') {
+        var existingPr = await getPull("testing", "staging", "open");
+        if (existingPr.data.length) {
+            console.log("Testing -> Staging PR already created");
+        } else {
+            await createPull("Testing -> Staging", "testing", "staging");
+        }
     }
-    else {
-        await createPull("Master -> Testing", "master", "testing")
+
+    if (github.ref == 'refs/heads/staging') {
+        var existingPr = await getPull("staging", "release", "open");
+        if (existingPr.data.length) {
+            console.log("Staging -> Release PR already created");
+        } else {
+            await createPull("Staging -> Release", "staging", "release");
+        }
     }
 }
