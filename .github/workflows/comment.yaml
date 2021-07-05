@@ -13,12 +13,24 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            var pullRequest = await github.pulls.list({
-              title: "New PR",
+            var existingPr = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               head: 'master',
               base: 'testing'
             });
-            console.log(pullRequest);
+            var prData = existingPr.data[0]
+            if (prData.title === "Master -> Testing") {
+                console.log("PR already present");
+            }
+            else {
+                github.pulls.create({
+                    title: "Master -> Testing",
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    head: 'master',
+                    base: 'testing'
+                })
+            }
+
