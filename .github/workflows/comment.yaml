@@ -13,7 +13,7 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            var existingPr = github.pulls.list({
+            var existingPr = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
