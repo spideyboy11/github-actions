@@ -24,7 +24,7 @@ module.exports = async ({github, context, core}) => {
             console.log(error.errors);
         }
     }
-
+    console.log(github.ref);
     if (github.ref == 'refs/heads/testing') {
         var existingPr = await getPull("testing", "staging", "open");
         if (existingPr.data.length) {
