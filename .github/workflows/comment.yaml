@@ -21,13 +21,13 @@ jobs:
               base: 'testing'
             });
             var prData = existingPr.data[0];
-            if (prData.title === "New PR") {
+            if (prData.title === "Master -> Testing") {
                 console.log("PR already present");
             }
             else {
                 try {
                     github.pulls.create({
-                        title: "New PR",
+                        title: "Master -> Testing",
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         head: 'master',
