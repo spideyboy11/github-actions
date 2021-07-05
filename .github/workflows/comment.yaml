@@ -33,8 +33,8 @@ jobs:
                       head: 'master',
                       base: 'testing'
                 });
-                console.log(createResponse);
                 } catch (error) {
                     console.log(error);
+                    console.log(error.status);
                 }
             }
