@@ -13,10 +13,12 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            github.pulls.create({
+            var pullRequest = await github.pulls.list({
               title: "New PR",
               owner: context.repo.owner,
               repo: context.repo.repo,
+              state: 'open',
               head: 'master',
               base: 'testing'
-            })
+            });
+            console.log(pullRequest);
