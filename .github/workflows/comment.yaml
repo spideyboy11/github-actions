@@ -14,6 +14,7 @@ jobs:
         with:
           script: |
             github.pulls.create({
+              title: "New PR",
               owner: context.repo.owner,
               repo: context.repo.repo,
               head: 'master',
