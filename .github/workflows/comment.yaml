@@ -20,8 +20,10 @@ jobs:
               head: 'master',
               base: 'testing'
             });
-            var prData = existingPr.data[0]
-            if (prData.title === "Master -> Testing") {
+            console.log(existingPr);
+            var prData = existingPr.data[0];
+            console.log(prData);
+            if (prData.title === "New PR") {
                 console.log("PR already present");
             }
             else {
@@ -37,4 +39,3 @@ jobs:
                     console.log(error);
                 }
             }
-
