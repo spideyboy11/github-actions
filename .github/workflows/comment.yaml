@@ -13,14 +13,13 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            var existingPr = await github.pulls.list({
+            var existingPr = github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               head: 'master',
               base: 'testing'
             });
-            console.log(existingPr);
             var prData = existingPr.data[0];
             console.log(prData);
             if (prData.title === "New PR") {
