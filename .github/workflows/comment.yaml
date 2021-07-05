@@ -26,13 +26,14 @@ jobs:
             }
             else {
                 try {
-                    github.pulls.create({
-                        title: "Master -> Testing",
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        head: 'master',
-                        base: 'testing'
-                    });
+                    var createResponse = await github.pulls.create({
+                      title: "Master -> Testing",
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      head: 'master',
+                      base: 'testing'
+                });
+                console.log(createResponse);
                 } catch (error) {
                     console.log(error);
                 }
