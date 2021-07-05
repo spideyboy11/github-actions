@@ -28,7 +28,6 @@ module.exports = async ({github, context, core}) => {
     var sourceBranch = null;
     var targetBranch = null;
     
-    console.log(context.ref);
     if (context.ref == 'refs/heads/testing') {
         var existingPr = await getPull("testing", "staging", "open");
         if (existingPr.data.length) {
@@ -39,7 +38,6 @@ module.exports = async ({github, context, core}) => {
         }
     }
 
-    console.log(context.ref);
     if (context.ref == 'refs/heads/staging') {
         var existingPr = await getPull("staging", "release", "open");
         if (existingPr.data.length) {
@@ -49,8 +47,9 @@ module.exports = async ({github, context, core}) => {
             targetBranch = "release";
         }
     }
-    console.log(sourceBranch, targetBranch);
+
     if (sourceBranch && targetBranch) {
-        await createPull("New PR created", sourceBranch, targetBranch);
+        var title = `${sourceBranch.charAt(0).toUpperCase() + sourceBranch.slice(1)} -> ${targetBranch.charAt(0).toUpperCase() + targetBranch.slice(1)}`
+        await createPull(title, sourceBranch, targetBranch);
     }
 }
