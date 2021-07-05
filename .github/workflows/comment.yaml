@@ -34,7 +34,6 @@ jobs:
                       base: 'testing'
                 });
                 } catch (error) {
-                    console.log(error);
-                    console.log(error.status);
+                    console.log(errors);
                 }
             }
