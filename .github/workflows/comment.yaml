@@ -13,5 +13,5 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            const script = require('.github/workflows/pullRequestAction.js')
+            const script = require('pullRequestAction.js')
             await script({github, context, core})
