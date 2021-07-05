@@ -4,7 +4,8 @@ name: report
 on:
   push:
     branches:
-      - master
+      - testing
+      - staging
 
 jobs:
   run:
