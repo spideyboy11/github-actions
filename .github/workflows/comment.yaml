@@ -21,7 +21,6 @@ jobs:
               base: 'testing'
             });
             var prData = existingPr.data[0];
-            console.log(prData);
             if (prData.title === "New PR") {
                 console.log("PR already present");
             }
