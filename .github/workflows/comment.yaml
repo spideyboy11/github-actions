@@ -1,23 +1,21 @@
 
 name: report
 
-on: pull_request
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   run:
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Adding Comment
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Hello world!" > report.md
-          cml-send-comment report.md
-      
-      - name: Send Slack notification (#qa-dev-handshake)
-        if: github.ref == 'refs/heads/testing'
-        run: |
-          QA_DEV_HANDSHAKE=http://requestbin.net/r/3mg7ow5s
-          curl -X POST --data "payload={\"text\": \"Testing branch has been deployed by ${{ github.actor }}\"}" ${QA_DEV_HANDSHAKE}
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
