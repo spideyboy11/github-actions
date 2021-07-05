@@ -25,12 +25,16 @@ jobs:
                 console.log("PR already present");
             }
             else {
-                github.pulls.create({
-                    title: "Master -> Testing",
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    head: 'master',
-                    base: 'testing'
-                })
+                try {
+                    github.pulls.create({
+                        title: "New PR",
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        head: 'master',
+                        base: 'testing'
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
