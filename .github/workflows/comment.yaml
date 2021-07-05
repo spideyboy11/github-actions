@@ -13,26 +13,5 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            var existingPr = await github.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              head: 'master',
-              base: 'testing'
-            });
-            if (existingPr.data.length) {
-                console.log("PR already present");
-            }
-            else {
-                try {
-                    var createResponse = await github.pulls.create({
-                      title: "Master -> Testing",
-                      owner: context.repo.owner,
-                      repo: context.repo.repo,
-                      head: 'master',
-                      base: 'testing'
-                });
-                } catch (error) {
-                    console.log(errors);
-                }
-            }
+            const script = require('.github/workflows/pullRequestAction.js')
+            await script({github, context, core})
