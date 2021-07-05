@@ -24,22 +24,31 @@ module.exports = async ({github, context, core}) => {
             console.log(error.errors);
         }
     }
-    console.log(github.ref);
-    if (github.ref == 'refs/heads/testing') {
+
+    var sourceBranch = null;
+    var targetBranch = null;
+
+    if (context.ref == 'refs/heads/testing') {
         var existingPr = await getPull("testing", "staging", "open");
         if (existingPr.data.length) {
             console.log("Testing -> Staging PR already created");
         } else {
-            await createPull("Testing -> Staging", "testing", "staging");
+            sourceBranch = "testing";
+            targetBranch = "staging";
         }
     }
 
-    if (github.ref == 'refs/heads/staging') {
+    if (context.ref == 'refs/heads/staging') {
         var existingPr = await getPull("staging", "release", "open");
         if (existingPr.data.length) {
             console.log("Staging -> Release PR already created");
         } else {
-            await createPull("Staging -> Release", "staging", "release");
+            sourceBranch = "staging";
+            targetBranch = "release";
         }
+    }
+
+    if (sourceBranch && targetBranch) {
+        await createPull("Staging -> Release", "staging", "release");
     }
 }
