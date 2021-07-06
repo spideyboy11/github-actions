@@ -2,10 +2,16 @@
 name: report
 
 on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'testing'
+      - 'staging'
+      - 'release'
   push:
     branches:
-      - testing
-      - staging
+      - 'testing'
+      - 'staging'
 
 jobs:
   run:
