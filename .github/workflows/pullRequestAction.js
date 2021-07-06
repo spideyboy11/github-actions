@@ -20,6 +20,7 @@ module.exports = async ({github, context, core}) => {
                 head: source,
                 base: target
             });
+            console.log("Created pull request.")
         } catch (error) {
             console.log(error.errors);
         }
@@ -27,7 +28,7 @@ module.exports = async ({github, context, core}) => {
 
     var sourceBranch = null;
     var targetBranch = null;
-    
+
     if (context.ref == 'refs/heads/testing') {
         var existingPr = await getPull("testing", "staging", "open");
         if (existingPr.data.length) {
@@ -36,9 +37,7 @@ module.exports = async ({github, context, core}) => {
             sourceBranch = "testing";
             targetBranch = "staging";
         }
-    }
-
-    if (context.ref == 'refs/heads/staging') {
+    } else if (context.ref == 'refs/heads/staging') {
         var existingPr = await getPull("staging", "release", "open");
         if (existingPr.data.length) {
             console.log("Staging -> Release PR already created");
@@ -49,7 +48,9 @@ module.exports = async ({github, context, core}) => {
     }
 
     if (sourceBranch && targetBranch) {
-        var title = `${sourceBranch.charAt(0).toUpperCase() + sourceBranch.slice(1)} -> ${targetBranch.charAt(0).toUpperCase() + targetBranch.slice(1)}`
+        var sourceName = sourceBranch.charAt(0).toUpperCase() + sourceBranch.slice(1);
+        var targetName = targetBranch.charAt(0).toUpperCase() + targetBranch.slice(1)
+        var title = `${sourceName} -> ${targetName}`
         await createPull(title, sourceBranch, targetBranch);
     }
 }
