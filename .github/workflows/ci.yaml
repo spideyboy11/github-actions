@@ -16,11 +16,15 @@ jobs:
           DD_API_KEY: ${{ secrets.DD_API_KEY }}
           DD_INSIDE_CI: "true"
           DD_HOSTNAME: "none"
+
     steps:
       - uses: actions/checkout@v2
 
       - name: my-python-app
+        env:
+          DD_ENV: "ci" 
+          DD_SERVICE: "my-python-app"
         run: |
           pip install -U ddtrace
           pip install pytest
-          DD_ENV=ci DD_SERVICE=my-python-app pytest --ddtrace
+          pytest --ddtrace
