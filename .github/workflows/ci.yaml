@@ -1,4 +1,4 @@
-name: CI
+name: Datadog CI
 on:
   push:
     branches:
@@ -18,8 +18,6 @@ jobs:
           DD_HOSTNAME: "none"
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: my-python-app
         env:
           DD_ENV: "ci" 

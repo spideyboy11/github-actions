@@ -25,3 +25,12 @@ jobs:
           script: |
             const script = require('./.github/workflows/pullRequestAction.js')
             await script({github, context, core})
+
+      - name: my-python-app
+        env:
+          DD_ENV: "ci" 
+          DD_SERVICE: "my-python-app"
+        run: |
+          pip install -U ddtrace
+          pip install pytest
+          pytest --ddtrace
