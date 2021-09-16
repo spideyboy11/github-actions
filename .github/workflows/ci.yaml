@@ -1,0 +1,18 @@
+jobs:
+  test:
+    services:
+      datadog-agent:
+        image: datadog/agent:latest
+        ports:
+          - 8126:8126
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_INSIDE_CI: "true"
+          DD_HOSTNAME: "none"
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: my-python-app
+        run: |
+          pip install -U ddtrace
+          make test
