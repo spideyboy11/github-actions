@@ -1,4 +1,4 @@
-name: Datadog CI
+name: DatadogCI
 on:
   push:
     branches:
@@ -18,10 +18,18 @@ jobs:
           DD_HOSTNAME: "none"
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: my-python-app
         env:
-          DD_ENV: "ci" 
-          DD_SERVICE: "my-python-app"
+        DD_AGENT_HOST: localhost
+        DD_ENV: ci
+        DD_SERVICE: my-python-app
+        DD_TAGS: "team:integration-tools-and-libraries"
+        DD_TRACE_ANALYTICS_ENABLED: "true"
+        RECORD: "none"
+        DD_TRACE_AGENT_URL: "http://localhost:8126"
+        PYTEST_ADDOPTS: "--ddtrace"
         run: |
           pip install -U ddtrace
           pip install pytest
